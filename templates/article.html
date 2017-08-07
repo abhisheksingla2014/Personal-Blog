@@ -1,0 +1,42 @@
+{% extends "index.html" %}
+
+{% block header %}
+<div class="clear"></div>
+<div class="banner-wrap">
+  <div class="banner"> <img class = "article_img" src="../static/images/{{post.query.filter_by(id=ids).first().img}}" alt="banner" /> </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="page-wrap">
+<div class="panel">
+    <div class="title">
+      <h1>{{post.query.filter_by(id=ids).first().heading}}</h1>
+      <h3>{{post.query.filter_by(id=ids).first().date}}</h3>
+      <h2>{{post.query.filter_by(id=ids).first().tag}}</h2>
+    </div>
+      <h4>{{post.query.filter_by(id=ids).first().content}}</h4>
+  </div>
+</div>
+</div>
+{% endblock %}
+{% block feedback %}
+<div class="enquiry-wrap">
+    <div class="title">
+      <h1>Contribute to this topic</h1>
+    </div>
+    <div class="enquiry-form">
+      <form>
+        <label>
+          <h3>Name</h3>
+        <input type="text" class="input_text" name="name" id="name"/>
+        </label>
+        <label>
+          <h3>Content</h3>
+        <textarea class="message" name="feedback" id="feedback"></textarea>
+        </label>
+        <input type="button" class="button" value="Submit" />
+      </form>
+    </div>
+  </div>
+{% endblock %}

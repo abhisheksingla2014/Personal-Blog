@@ -1,0 +1,263 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Seeker</title>
+<link href="../static/css/styles.css" rel="stylesheet" type="text/css" />
+<link href='http://fonts.googleapis.com/css?family=Lobster+Two' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Rokkitt' rel='stylesheet' type='text/css'>
+
+<!---menu--->
+<link rel="stylesheet" href="../static/css/superfish.css" media="screen">
+<script src="../static/js/jquery-1.9.0.min.js"></script>
+<script src="../static/js/hoverIntent.js"></script>
+<script src="../static/js/superfish.js"></script>
+<script>
+
+		// initialise plugins
+		jQuery(function(){
+			jQuery('#example').superfish({
+				//useClick: true
+			});
+		});
+
+		</script>
+
+</head>
+<body>
+<div class="header-wrap">
+  <div class="logo">
+    <h1>Seeker</h1>
+  </div>
+  <div class="menu"> <img src="../static/images/menu-left.png" alt="image"/>
+    	<ul class="sf-menu" id="example">
+        <li><a href = "{{url_for('index')}}">Home</a></li>
+         <li><a href = "{{url_for('about')}}">About</a></li>
+        <li><a href = "{{url_for('works')}}">Works</a></li>
+        <li class="current"><a href = "{{url_for('page')}}">Page</a></li>
+          <ul>
+            <li> <a href="#">consectetuer </a> </li>
+            <li class="current"> <a href="#">Nunc dignissim risus id metus.</a>
+              <ul>
+                <li class="current"><a href="#">Cras ornare tristique elit</a></li>
+                <li><a href="#">Ut aliquam sollicitudin leo</a></li>
+                <li><a href="#">Cras iaculis ultricies nulla.</a></li>
+                <li><a href="#">Aliquam tincidunt </a></li>
+                <li><a href="#">vestibulum nulla nec ante</a></li>
+              </ul>
+            </li>
+            <li> <a href="#">Cras iaculis ultricies nulla</a></li>
+            <li> <a href="#">Donec quis dui at</a></li>
+          </ul>
+        </li>
+        <li><a href = "{{url_for('contact')}}">Contact</a></li>
+      </ul>
+    <img src="../static/images/menu-right.png" alt="image"/> </div>
+</div>
+<!---header-wrap--->
+{% block header %}
+<div class="clear"></div>
+<div class="banner-wrap">
+ <div id = "slideshow">
+  <div class ="banner">
+    <div class = "slider_text">
+      <h2>{{db.session.query(post).order_by(post.id.desc())[0].heading}}</h2>
+    </div>
+    <img class = "article_img" src="../static/images/{{db.session.query(post).order_by(post.id.desc())[0].img}}" alt="Rainbow lorakeets" />
+  </div>
+   <div class ="banner"><img class = "article_img" src="../static/images/{{db.session.query(post).order_by(post.id.desc())[1].img}}" alt="Rainbow lorakeets" />
+    <div class = "slider_text">
+      <h2>{{db.session.query(post).order_by(post.id.desc())[1].content}}</h2>
+    </div>
+  </div>
+  <div class ="banner"><img class = "article_img" src="../static/images/{{db.session.query(post).order_by(post.id.desc())[2].img}}" alt="Rainbow lorakeets" />
+    <div class = "slider_text">
+      <h2>{{db.session.query(post).order_by(post.id.desc())[2].content}}</h2>
+    </div>
+  </div>
+  <div class ="banner"><img class = "article_img" src="../static/images/{{db.session.query(post).order_by(post.id.desc())[3].img}}" alt="Rainbow lorakeets" />
+    <div class = "slider_text">
+      <h2>{{db.session.query(post).order_by(post.id.desc())[3].content}}</h2>
+    </div>
+  </div>
+</div>
+ </div>
+
+    <script>
+var slideShow = function(container) {
+    this.images = [];
+    this.curImage = 0;
+    for (i = 0; i < container.childElementCount; i++) {
+        this.images.push(container.children[i]);
+        this.images[i].style.display = "none";
+    }
+
+    // Handle going to to the next slide
+    var nextSlide = function() {
+        for (var i = 0; i < this.images.length; i++) {
+            this.images[i].style.display = "none";
+        }
+        this.images[this.curImage].style.display = "block";
+        this.curImage++;
+        if (this.curImage >= this.images.length) {
+            this.curImage = 0;
+        }
+        window.setTimeout(nextSlide.bind(this), 2000);
+    };
+
+    nextSlide.call(this);
+};
+slideShow(document.getElementById("slideshow"));
+    </script>
+<br>
+{% endblock %}
+<!---banner--->
+{% block content %}
+<div class="page-wrap">
+  <div class="wrap">
+    <div class="box marRight40">
+      <div background = "../static/images/{{db.session.query(post).order_by(post.id.desc())[0].img}}" class="panel" >
+        <div class="title">
+          <h1>{{db.session.query(post).order_by(post.id.desc())[0].heading}}</h1>
+          <h3>{{db.session.query(post).order_by(post.id.desc())[0].date}}</h3>
+          <h2>{{db.session.query(post).order_by(post.id.desc())[0].tag}}</h2>
+        </div>
+        <div class="content">
+          <p>{{db.session.query(post).order_by(post.id.desc())[0].content[:400]}}...</p>
+          <div class="button"><a href="{{url_for('article')}}?ids={{db.session.query(post).order_by(post.id.desc())[0].id}}">More</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="panel">
+        <div class="title">
+          <h1>{{db.session.query(post).order_by(post.id.desc())[1].heading}}</h1>
+          <h3>{{db.session.query(post).order_by(post.id.desc())[1].date}}</h3>
+          <h2>{{db.session.query(post).order_by(post.id.desc())[1].tag}}</h2>
+        </div>
+        <div class="content">
+          <p>{{db.session.query(post).order_by(post.id.desc())[1].content[:400]}}...</p>
+          <div class="button"><a href="{{url_for('article')}}?ids={{db.session.query(post).order_by(post.id.desc())[1].id}}">More</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="box marRight40">
+      <div background = "../static/images/{{db.session.query(post).order_by(post.id.desc())[2].img}}" class="panel">
+        <div class="title">
+          <h1>{{db.session.query(post).order_by(post.id.desc())[2].heading}}</h1>
+          <h3>{{db.session.query(post).order_by(post.id.desc())[2].date}}</h3>
+          <h2>{{db.session.query(post).order_by(post.id.desc())[2].tag}}</h2>
+        </div>
+        <div class="content">
+          <p>{{db.session.query(post).order_by(post.id.desc())[2].content[:400]}}...</p>
+          <div class="button"><a href="{{url_for('article')}}?ids={{db.session.query(post).order_by(post.id.desc())[2].id}}">More</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="box">
+      <div background = "../static/images/{{db.session.query(post).order_by(post.id.desc())[3].img}}" class="panel">
+        <div class="title">
+          <h1>{{db.session.query(post).order_by(post.id.desc())[3].heading}}</h1>
+          <h3>{{db.session.query(post).order_by(post.id.desc())[3].date}}</h3>
+          <h2>{{db.session.query(post).order_by(post.id.desc())[3].tag}}</h2>
+        </div>
+        <div class="content">
+          <p>{{db.session.query(post).order_by(post.id.desc())[3].content[:400]}}...</p>
+          <div class="button"><a href="{{url_for('article')}}?ids={{db.session.query(post).order_by(post.id.desc())[3].id}}">More</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <!---wrap-end--->
+  {% for instance in db.session.query(post).order_by(post.id.desc())[4:] %}
+  <div class="panel">
+    <div class="title">
+      <h1>{{instance.heading}}</h1>
+      <h3>{{instance.date}}</h3>
+      <h2>{{instance.tag}}</h2>
+    </div>
+    <div class="content"> <img src="../static/images/{{instance.img}}" height = "150px" width = "150px"  alt="" />
+      <p>{{instance.content[:900]}}...</p>
+      <div class="button floatLeft"><a href="{{url_for('article')}}?ids={{instance.id}}">More</a></div>
+    </div>
+  </div><br>
+{% endfor %}
+{% endblock %}
+  <!---panel-end--->
+  <br>
+  {% block feedback %}
+  <div class="enquiry-wrap">
+    <div class="title">
+      <h1> Contribute</h1>
+    </div>
+    <div class="enquiry-form">
+      <form>
+        <label>
+          <h3>Name</h3>
+        <input type="text" class="input_text" name="name" id="name"/>
+        </label>
+        <label>
+          <h3>Topic</h3>
+        <input type="text" class="input_text" name="name" id="name"/>
+        </label>
+        <label>
+          <h3>Content</h3>
+        <textarea class="message" name="feedback" id="feedback"></textarea>
+        </label>
+        <input type="button" class="button" value="Submit" />
+      </form>
+    </div>
+  </div>
+  {% endblock %}
+</div>
+<!---page-wrap-end--->
+<div class="footer-wrap">
+  <div class="footer">
+    <div class="panel marRight30">
+      <div class="title">
+        <h1>Top Posts</h1>
+      </div>
+      <div class="content">
+        <ul>
+          <li><a href="#">{{db.session.query(post).order_by(post.id.desc())[1].heading}}</a></li>
+          <li><a href="#">{{db.session.query(post).order_by(post.id.desc())[2].heading}}</a></li>
+          <li><a href="#">{{db.session.query(post).order_by(post.id.desc())[3].heading}}</a></li>
+          <li><a href="#">{{db.session.query(post).order_by(post.id.desc())[4].heading}}</a></li>
+          <li class="bg-bottom-none"><a href="#">{{db.session.query(post).order_by(post.id.desc())[4].heading}}</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="panel marRight30">
+      <div class="title">
+        <h1>Cisiut aliquid</h1>
+      </div>
+      <div class="content">
+        <p>Sed ut perspiciatis, unde omnis iste natus error sit voluptatem ldantium, ipsa, quae ab illo inventore veritatis et. Guasi architecto beatae vitae dicta sunt, explicabo.</p>
+        <p>Fusce diam mauris, auctor in cursus eget, malesuada vitae erat. Lorem ajarack ind sominto lorem ipsum,natus error cursus eget, malesuada vitae erat.</p>
+        <div class="button"><a href="#">More</a></div>
+      </div>
+    </div>
+    <div class="panelLost">
+      <div class="title">
+        <h1>Similique sunt in culpa</h1>
+      </div>
+      <div class="content"> <img src="../static/images/image2.jpg" alt="image" />
+        <p>Ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt, explicabo.</p>
+        <div class="button"><a href="#">More</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!---footer-wrap--->
+<div class="clear"></div>
+<div class="copyright-wrap">
+  <div class="copyright">
+    <div class="content">
+      <p>© 2012 All Rights Reserved  | <a href="#" class="link">Privacy Policy</a>&nbsp;&nbsp;
+        Designed by :<a href="www.alltemplateneeds.com."> www.alltemplateneeds.com.</a>&nbsp;&nbsp;
+        Images From:<a href="www.photorack.net" class="link"> www.photorack.net</a></p>
+    </div>
+  </div>
+</div>
+</body>
+</html>
